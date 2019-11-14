@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
 
-        response.sendRedirect("login?code=2");
+        response.sendRedirect("login?state=logout");
         return;
     }
 }

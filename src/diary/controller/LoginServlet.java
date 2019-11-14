@@ -1,6 +1,7 @@
 package diary.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,18 @@ import diary.model.LoginModel;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Messages
+        HashMap<String, String> msg = new HashMap<String, String>();
+        msg.put("logout", "ログアウトしました。");
+        msg.put("not_logged", "ログインしていません。");
+
+        // Get Message
+        String state = request.getParameter("state");
+        if(state != null && !state.isEmpty()) {
+            request.setAttribute("errorMsg", msg.get(state));
+        }
+
+        // jsp
         RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
         rd.forward(request, response);
     }

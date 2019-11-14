@@ -53,14 +53,14 @@ public class LoginCheckFilter implements Filter {
 
         /* セッションが存在しない場合ログインページへリダイレクト */
         if(session == null) {
-            ((HttpServletResponse)response).sendRedirect("login?code=1");
+            ((HttpServletResponse)response).sendRedirect("login?state=not_logged");
             return;
         }
 
         /* ログアウト済みへの対応 */
         UserInfoBeans userInfoBeans = (UserInfoBeans)session.getAttribute("userInfoBeans");
         if(userInfoBeans == null) {
-            ((HttpServletResponse)response).sendRedirect("login?code=1");
+            ((HttpServletResponse)response).sendRedirect("login?state=not_logged");
             return;
         }
 
