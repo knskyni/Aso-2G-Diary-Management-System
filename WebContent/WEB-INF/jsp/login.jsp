@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+    String errorMsg = (String)request.getAttribute("errorMsg");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +11,7 @@
 </head>
 <body>
     <p>ようこそ！</p>
-    <form action="auth" method="POST">
+    <form action="" method="POST">
         <table>
             <tbody>
                 <tr>
@@ -21,6 +24,9 @@
                 </tr>
             </tbody>
         </table>
+        <% if(errorMsg != null) { %>
+        <span style="color: red;"><%= errorMsg %></span><br>
+        <% } %>
         <input type="submit" value="ログイン">
     </form>
 </body>
