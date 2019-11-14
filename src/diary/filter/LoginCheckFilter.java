@@ -35,7 +35,7 @@ public class LoginCheckFilter implements Filter {
         if(Arrays.asList(throughPath).contains(accessPath)) {
             // ログアウト判定 (ログアウト後のsessionはnullにならない)
             if(session != null) {
-                if(session.getAttribute("userInfoBeans") != null) {
+                if(session.getAttribute("userInfo") != null) {
                     ((HttpServletResponse)response).sendRedirect("top");
                     return;
                 }
@@ -58,8 +58,8 @@ public class LoginCheckFilter implements Filter {
         }
 
         /* ログアウト済みへの対応 */
-        UserInfoBeans userInfoBeans = (UserInfoBeans)session.getAttribute("userInfoBeans");
-        if(userInfoBeans == null) {
+        UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
+        if(userInfo == null) {
             ((HttpServletResponse)response).sendRedirect("login?state=not_logged");
             return;
         }

@@ -42,10 +42,10 @@ public class LoginServlet extends HttpServlet {
 
         // Login Process
         LoginModel loginModel = new LoginModel();
-        UserInfoBeans userInfoBeans = loginModel.login(userId, password);
+        UserInfoBeans userInfo = loginModel.login(userId, password);
 
         // If user is not found
-        if(userInfoBeans == null) {
+        if(userInfo == null) {
             request.setAttribute("errorMsg", "ユーザー名またはパスワードが間違っています。");
             RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/login.jsp");
             rd.forward(request, response);
@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
         // Session
         HttpSession session = request.getSession(true);
-        session.setAttribute("userInfoBeans", userInfoBeans);
+        session.setAttribute("userInfo", userInfo);
 
         response.sendRedirect("top");
     }

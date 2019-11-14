@@ -19,7 +19,7 @@ public class StudentDao extends Dao {
 
         // SQL Execute
         PreparedStatement stmt = null;
-        UserInfoBeans userInfoBeans = null;
+        UserInfoBeans userInfo = null;
         try {
             stmt = con.prepareStatement(loginSQL);
             stmt.setString(1, userId);
@@ -28,19 +28,19 @@ public class StudentDao extends Dao {
             while(rs.next()) {
                 // If matched password
                 if(Password.match(password, rs.getString("password"))) {
-                    userInfoBeans = new UserInfoBeans();
-                    userInfoBeans.setUserId(rs.getString("student_id"));
-                    userInfoBeans.setFirstName(rs.getString("first_name"));
-                    userInfoBeans.setLastName(rs.getString("last_name"));
-                    userInfoBeans.setClassId(rs.getInt("class_code"));
-                    userInfoBeans.setClassName(rs.getString("class_name"));
-                    userInfoBeans.setType("student");
+                    userInfo = new UserInfoBeans();
+                    userInfo.setUserId(rs.getString("student_id"));
+                    userInfo.setFirstName(rs.getString("first_name"));
+                    userInfo.setLastName(rs.getString("last_name"));
+                    userInfo.setClassId(rs.getInt("class_code"));
+                    userInfo.setClassName(rs.getString("class_name"));
+                    userInfo.setType("student");
                 }
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
 
-        return userInfoBeans;
+        return userInfo;
     }
 }

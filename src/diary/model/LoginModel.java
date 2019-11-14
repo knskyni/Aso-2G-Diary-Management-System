@@ -8,20 +8,20 @@ public class LoginModel {
     public UserInfoBeans login(String userId, String password) {
         StudentDao studentDao = new StudentDao();
         TeacherDao teacherDao = new TeacherDao();
-        UserInfoBeans userInfoBeans = null;
+        UserInfoBeans userInfo = null;
 
         // Search from Student
         studentDao.connect();
-        userInfoBeans = studentDao.login(userId, password);
+        userInfo = studentDao.login(userId, password);
 
         // Search from Teacher
-        if(userInfoBeans == null) {
+        if(userInfo == null) {
             teacherDao.connect();
-            userInfoBeans = teacherDao.login(userId, password);
+            userInfo = teacherDao.login(userId, password);
             teacherDao.close();
         }
 
         studentDao.close();
-        return userInfoBeans;
+        return userInfo;
     }
 }
