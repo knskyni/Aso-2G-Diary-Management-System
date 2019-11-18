@@ -14,7 +14,7 @@
     <p>
         名前: <%= userInfo.getLastName() %> <%= userInfo.getFirstName() %>先生<br>
 
-        <a href="list">一覧</a> | <a href="logout">ログアウト</a>
+        <a href="teacher/diary/list">一覧</a> | <a href="logout">ログアウト</a>
     </p>
 </body>
 </html>

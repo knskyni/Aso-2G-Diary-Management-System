@@ -15,7 +15,7 @@
         クラス: <%= userInfo.getClassName() %><br>
         名前: <%= userInfo.getLastName() %> <%= userInfo.getFirstName() %>さん<br>
 
-        <a href="list">一覧</a> | <a href="logout">ログアウト</a>
+        <a href="diary/list">一覧</a> | <a href="logout">ログアウト</a>
     </p>
 </body>
 </html>
