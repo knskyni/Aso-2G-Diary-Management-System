@@ -7,6 +7,7 @@ public class DiaryInfoBeans implements Serializable {
     private int diaryId;
     private String userId;
     private String userName;
+    private int classId;
     private String className;
     private Date date;
     private Date registTime;
@@ -14,6 +15,7 @@ public class DiaryInfoBeans implements Serializable {
     private String goodComment;
     private String badComment;
     private String aboutComment;
+    private String teacherId;
     private String teacherName;
     private String teacherComment;
 
@@ -39,6 +41,14 @@ public class DiaryInfoBeans implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getClassName() {
@@ -95,6 +105,14 @@ public class DiaryInfoBeans implements Serializable {
 
     public void setAboutComment(String aboutComment) {
         this.aboutComment = aboutComment;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getTeacherName() {
