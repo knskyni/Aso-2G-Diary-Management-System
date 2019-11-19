@@ -36,7 +36,7 @@ public class LoginCheckFilter implements Filter {
             // ログアウト判定 (ログアウト後のsessionはnullにならない)
             if(session != null) {
                 if(session.getAttribute("userInfo") != null) {
-                    ((HttpServletResponse)response).sendRedirect("top");
+                    ((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath() + "top");
                     return;
                 }
             }
@@ -53,14 +53,14 @@ public class LoginCheckFilter implements Filter {
 
         /* セッションが存在しない場合ログインページへリダイレクト */
         if(session == null) {
-            ((HttpServletResponse)response).sendRedirect("login?state=not_logged");
+            ((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath() + "login?state=not_logged");
             return;
         }
 
         /* ログアウト済みへの対応 */
         UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
         if(userInfo == null) {
-            ((HttpServletResponse)response).sendRedirect("login?state=not_logged");
+            ((HttpServletResponse)response).sendRedirect(((HttpServletRequest)request).getContextPath() + "login?state=not_logged");
             return;
         }
 
