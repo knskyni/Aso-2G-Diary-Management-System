@@ -14,6 +14,7 @@ public class DiaryDao extends Dao {
     public final String insertSQL = "INSERT INTO `diaries`(`id`, `class_code`, `date`, `student_id`, `regist_time`, `update_time`, `good_comment`, `bad_comment`, `about_comment`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
     public final String getDiarySQL = "SELECT `student_id`, `date`, `good_comment`, `bad_comment`, `about_comment` FROM `diaries` WHERE `id` = ?;";
     public final String updateSQL = "UPDATE `diaries` SET `date` = ?, `update_time` = ?, `good_comment` = ?, `bad_comment` = ?, `about_comment` = ? WHERE `id` = ? AND `student_id` = ?;";
+    public final String deleteSQL = "UPDATE `diaries` SET `status` = 'deleted' WHERE `id` = ? AND `student_id` = ?;";
 
     public List<DiaryInfoBeans> getList(int classId) {
         // If not connected to DB, return null
@@ -190,6 +191,37 @@ public class DiaryDao extends Dao {
             stmt.setString(5, diaryInfo.getAboutComment());
             stmt.setInt(6, diaryInfo.getDiaryId());
             stmt.setString(7, diaryInfo.getUserId());
+
+            // Execute
+            executeNum = stmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return (executeNum == 1) ? true : false;
+    }
+
+    public boolean delete(DiaryInfoBeans diaryInfo) {
+        // If not connected to DB, return null
+        if(con == null) {
+            System.out.println("データベースに接続していません。");
+            return false;
+        }
+
+        // Prepare
+        int executeNum = 0;
+
+        // SQL Execute
+        PreparedStatement stmt = null;
+
+        try {
+            // SQL Prepare
+            stmt = con.prepareStatement(deleteSQL);
+
+            // Parameter Prepare
+            stmt.setInt(1, diaryInfo.getDiaryId());
+            stmt.setString(2, diaryInfo.getUserId());
 
             // Execute
             executeNum = stmt.executeUpdate();

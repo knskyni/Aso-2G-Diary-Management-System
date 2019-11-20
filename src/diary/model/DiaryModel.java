@@ -76,4 +76,21 @@ public class DiaryModel {
 
         return result;
     }
+
+    public boolean delete(DiaryInfoBeans diaryInfo) {
+        DiaryDao diaryDao = new DiaryDao();
+        boolean result = false;
+
+        try {
+            diaryDao.connect();
+            result = diaryDao.delete(diaryInfo);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            diaryDao.close();
+        }
+
+        return result;
+    }
 }
