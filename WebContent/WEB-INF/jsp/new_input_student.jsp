@@ -9,7 +9,7 @@
 <body>
     <form action="confirm" method="POST">
         <label>日付</label><br>
-        <input type="date" name="date">
+        <input type="date" name="date"><br>
         <label>よかったこと</label><br>
         <textarea name="good_comment"></textarea><br>
         <label>気になったこと</label><br>
