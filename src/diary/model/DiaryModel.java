@@ -42,4 +42,38 @@ public class DiaryModel {
 
         return result;
     }
+
+    public DiaryInfoBeans getDiary(int diaryId) {
+        DiaryDao diaryDao = new DiaryDao();
+        DiaryInfoBeans diaryInfo = null;
+
+        try {
+            diaryDao.connect();
+            diaryInfo = diaryDao.getDiary(diaryId);
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            diaryDao.close();
+        }
+
+        return diaryInfo;
+    }
+
+    public boolean update(DiaryInfoBeans diaryInfo) {
+        DiaryDao diaryDao = new DiaryDao();
+        boolean result = false;
+
+        try {
+            diaryDao.connect();
+            diaryInfo.setUpdateTime(new Date());
+            result = diaryDao.update(diaryInfo);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            diaryDao.close();
+        }
+
+        return result;
+    }
 }
