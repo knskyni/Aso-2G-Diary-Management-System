@@ -10,8 +10,8 @@ import diary.beans.DiaryInfoBeans;
 
 public class DiaryDao extends Dao {
     public final String getListSQL = "SELECT `diaries`.`id`, `students`.`last_name` AS `student_last_name`, `students`.`first_name` AS `student_first_name`, `courses`.`course_name`, `classes`.`grade`, `classes`.`class_name`, `diaries`.`date`, `diaries`.`regist_time`, `diaries`.`update_time`, `diaries`.`good_comment`, `diaries`.`bad_comment`, `diaries`.`about_comment`, `teachers`.`last_name` AS `teacher_last_name`, `teachers`.`first_name` AS `teacher_first_name`, `diaries`.`teacher_comment` FROM `diaries` INNER JOIN `students` ON `diaries`.`student_id` = `students`.`student_id` INNER JOIN `classes` ON `diaries`.`class_code` = `classes`.`class_code` INNER JOIN `courses` ON `classes`.`course_code` = `courses`.`course_code` LEFT OUTER JOIN `teachers` ON `diaries`.`teacher_id` = `teachers`.`teacher_id` WHERE `diaries`.`class_code` = ? AND `status` = 'public';";
-    public final String getMaxIdSQL = "SELECT MAX(`id`) AS `max`, COUNT(`id`) AS `count` FROM `diaries`;";
-    public final String insertSQL = "INSERT INTO `diaries`(`id`, `class_code`, `date`, `student_id`, `regist_time`, `update_time`, `good_comment`, `bad_comment`, `about_comment`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    public final String insertCheckSQL = "SELECT COUNT(*) AS `count` FROM `diaries` WHERE `class_code` = ? AND `date` = ? AND `status` = 'public';";
+    public final String insertSQL = "INSERT INTO `diaries`(`class_code`, `date`, `student_id`, `regist_time`, `update_time`, `good_comment`, `bad_comment`, `about_comment`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     public final String getDiarySQL = "SELECT `student_id`, `date`, `good_comment`, `bad_comment`, `about_comment` FROM `diaries` WHERE `id` = ? AND `status` = 'public';";
     public final String updateSQL = "UPDATE `diaries` SET `date` = ?, `update_time` = ?, `good_comment` = ?, `bad_comment` = ?, `about_comment` = ? WHERE `id` = ? AND `student_id` = ?;";
     public final String deleteSQL = "UPDATE `diaries` SET `status` = 'deleted' WHERE `id` = ? AND `student_id` = ?;";
@@ -66,36 +66,35 @@ public class DiaryDao extends Dao {
         return diaryList;
     }
 
-    public Integer getMaxId() {
+    public boolean insertCheck(DiaryInfoBeans diaryInfo) {
         // If not connected to DB, return null
         if(con == null) {
             System.out.println("データベースに接続していません。");
-            return null;
+            return false;
         }
 
-        // Prepare
-        Integer maxId = null;
+        // Prerare
+        boolean result = false;
 
         // SQL Execute
         PreparedStatement stmt = null;
-
         try {
-            stmt = con.prepareStatement(getMaxIdSQL);
+            stmt = con.prepareStatement(insertCheckSQL);
+            stmt.setInt(1, diaryInfo.getClassId());
+            stmt.setDate(2, new java.sql.Date(diaryInfo.getDate().getTime()));
             ResultSet rs = stmt.executeQuery();
 
             while(rs.next()) {
-                // Get Result
-                if(rs.getInt("count") > 0) {
-                    maxId = rs.getInt("max");
-                } else {
-                    maxId = 0;
+                if(rs.getInt("count") == 0) {
+                    result = true;
                 }
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            result = false;
         }
 
-        return maxId;
+        return result;
     }
 
     public boolean insert(DiaryInfoBeans diaryInfo) {
@@ -116,15 +115,14 @@ public class DiaryDao extends Dao {
             stmt = con.prepareStatement(insertSQL);
 
             // Parameter Prepare
-            stmt.setInt(1, diaryInfo.getDiaryId());
-            stmt.setInt(2, diaryInfo.getClassId());
-            stmt.setDate(3, new java.sql.Date(diaryInfo.getDate().getTime()));
-            stmt.setString(4, diaryInfo.getUserId());
-            stmt.setTimestamp(5, new java.sql.Timestamp(diaryInfo.getRegistTime().getTime()));
-            stmt.setTimestamp(6, new java.sql.Timestamp(diaryInfo.getUpdateTime().getTime()));
-            stmt.setString(7, diaryInfo.getGoodComment());
-            stmt.setString(8, diaryInfo.getBadComment());
-            stmt.setString(9, diaryInfo.getAboutComment());
+            stmt.setInt(1, diaryInfo.getClassId());
+            stmt.setDate(2, new java.sql.Date(diaryInfo.getDate().getTime()));
+            stmt.setString(3, diaryInfo.getUserId());
+            stmt.setTimestamp(4, new java.sql.Timestamp(diaryInfo.getRegistTime().getTime()));
+            stmt.setTimestamp(5, new java.sql.Timestamp(diaryInfo.getUpdateTime().getTime()));
+            stmt.setString(6, diaryInfo.getGoodComment());
+            stmt.setString(7, diaryInfo.getBadComment());
+            stmt.setString(8, diaryInfo.getAboutComment());
 
             // Execute
             executeNum = stmt.executeUpdate();

@@ -29,10 +29,12 @@ public class DiaryModel {
 
         try {
             diaryDao.connect();
-            diaryInfo.setDiaryId(diaryDao.getMaxId() + 1);
-            diaryInfo.setRegistTime(new Date());
-            diaryInfo.setUpdateTime(new Date());
-            result = diaryDao.insert(diaryInfo);
+            // Check for duplicate
+            if(diaryDao.insertCheck(diaryInfo)) {
+                diaryInfo.setRegistTime(new Date());
+                diaryInfo.setUpdateTime(new Date());
+                result = diaryDao.insert(diaryInfo);
+            }
         } catch(Exception e) {
             e.printStackTrace();
             return false;
