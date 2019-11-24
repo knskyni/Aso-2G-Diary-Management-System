@@ -32,7 +32,7 @@
                 <td><%= sdf.format(diaryInfo.getDate()) %></td>
                 <td><%= diaryInfo.getUserName() %></td>
                 <td><%= sdfTime.format(diaryInfo.getRegistTime()) %></td>
-                <td><%= sdfTime.format(diaryInfo.getUpdateTime()) %></td>
+                <td><%= diaryInfo.getUpdateTime() == null ? "" : sdfTime.format(diaryInfo.getUpdateTime()) %></td>
                 <td><%= diaryInfo.getTeacherName() == null ? "入力待ち" : diaryInfo.getTeacherName() %></td>
                 <td><a href="update/input?id=<%= diaryInfo.getDiaryId() %>">編集</a> | <a href="delete/confirm?id=<%= diaryInfo.getDiaryId() %>">削除</a></td>
             </tr>

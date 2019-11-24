@@ -32,7 +32,6 @@ public class DiaryModel {
             // Check for duplicate
             if(diaryDao.insertCheck(diaryInfo)) {
                 diaryInfo.setRegistTime(new Date());
-                diaryInfo.setUpdateTime(new Date());
                 result = diaryDao.insert(diaryInfo);
             }
         } catch(Exception e) {
