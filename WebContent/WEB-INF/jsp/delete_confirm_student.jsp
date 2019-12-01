@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="diary.beans.DiaryInfoBeans" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="diary.util.HTML" %>
 <%
     DiaryInfoBeans deleteDiaryInfo = (DiaryInfoBeans)session.getAttribute("deleteDiaryInfo");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -21,15 +22,15 @@
             </tr>
             <tr>
                 <th>良かったこと</th>
-                <td><%= deleteDiaryInfo.getGoodComment() %></td>
+                <td><%= HTML.sanitize(deleteDiaryInfo.getGoodComment()) %></td>
             </tr>
             <tr>
                 <th>気になったこと</th>
-                <td><%= deleteDiaryInfo.getBadComment() %></td>
+                <td><%= HTML.sanitize(deleteDiaryInfo.getBadComment()) %></td>
             </tr>
             <tr>
                 <th>いろいろ</th>
-                <td><%= deleteDiaryInfo.getAboutComment() %></td>
+                <td><%= HTML.sanitize(deleteDiaryInfo.getAboutComment()) %></td>
             </tr>
         </tbody>
     </table>
