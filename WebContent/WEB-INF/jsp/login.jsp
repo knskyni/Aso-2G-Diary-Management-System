@@ -22,7 +22,7 @@
         <i class="fas fa-unlock fa-5x mb-3"></i>
         <h1 class="h3 mb-3 font-weight-normal">ログイン</h1>
         <label for="inputEmail" class="sr-only">ユーザー名</label>
-        <input id="inputEmail" class="form-control" type="number" name="userid" placeholder="ユーザー名" required autofocus>
+        <input id="inputEmail" class="form-control" type="text" name="userid" placeholder="ユーザー名" required autofocus>
         <label for="inputPassword" class="sr-only">パスワード</label>
         <input id="inputPassword" class="form-control" type="password" name="password" placeholder="パスワード" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">サインイン</button>
