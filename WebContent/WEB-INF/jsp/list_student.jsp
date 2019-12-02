@@ -29,7 +29,7 @@
 <body class="w-100">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand font-weight-bold" href="#">
+        <a class="navbar-brand font-weight-bold" href="<%= request.getContextPath() + "/top" %>">
             <i class="far fa-sticky-note fa-lg"></i>
             クラス日誌管理システム
         </a>
