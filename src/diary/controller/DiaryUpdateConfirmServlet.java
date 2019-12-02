@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import diary.beans.DiaryInfoBeans;
 import diary.beans.UserInfoBeans;
+import diary.util.CheckString;
 
 @WebServlet("/diary/update/confirm")
 public class DiaryUpdateConfirmServlet extends HttpServlet {
@@ -26,6 +27,13 @@ public class DiaryUpdateConfirmServlet extends HttpServlet {
         String badComment = request.getParameter("bad_comment");
         String aboutComment = request.getParameter("about_comment");
 
+        // When not entered
+        if(CheckString.isEmpty(goodComment) || CheckString.isEmpty(badComment) || CheckString.isEmpty(aboutComment)) {
+            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            return;
+        }
+
+        // When the number of characters is exceeded
         if(goodComment.length() > 512 || badComment.length() > 512 || aboutComment.length() > 512) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
             return;
