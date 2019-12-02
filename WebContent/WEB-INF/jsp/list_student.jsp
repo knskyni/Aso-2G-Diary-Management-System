@@ -73,10 +73,16 @@
                             <td><%= diaryInfo.getUpdateTime() == null ? "" : sdfTime.format(diaryInfo.getUpdateTime()) %></td>
                             <td><%= diaryInfo.getTeacherComment() == null ? "未" : "済" %></td>
                             <td>
-                                <% if(userInfo.getUserId().equals(diaryInfo.getUserId()) || diaryInfo.getTeacherComment() == null) { %>
+                            <% if(userInfo.getUserId().equals(diaryInfo.getUserId())) { %>
+                                <% if(diaryInfo.getTeacherComment() == null) {%>
                                 <button type="button" class="btn btn-outline-info" onclick="location.href='./update/input?id=<%= diaryInfo.getDiaryId() %>'">編集</button>
                                 <button type="button" class="btn btn-outline-danger" onclick="location.href='./delete/confirm?id=<%= diaryInfo.getDiaryId() %>'">削除</button>
+                                <% } else { %>
+                                担任チェック後は<br>編集できません
                                 <% } %>
+                            <% } else {%>
+                                他人の日誌は<br>操作できません
+                            <% } %>
                             </td>
                         </tr>
                         <% } %>
