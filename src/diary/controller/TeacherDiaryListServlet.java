@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import diary.beans.DiaryInfoBeans;
 import diary.model.DiaryModel;
-import diary.util.CheckString;
+import diary.util.StringUtil;
 
 @WebServlet("/teacher/diary/list")
 public class TeacherDiaryListServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class TeacherDiaryListServlet extends HttpServlet {
         DiaryModel diaryModel = new DiaryModel();
         List<DiaryInfoBeans> diaryList;
 
-        if(CheckString.isEmpty(classIdString)) {
+        if(StringUtil.isEmpty(classIdString)) {
             diaryList = diaryModel.getList();
         } else {
 
