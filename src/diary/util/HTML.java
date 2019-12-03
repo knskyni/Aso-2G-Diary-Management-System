@@ -3,7 +3,7 @@ package diary.util;
 public class HTML {
     public static String sanitize(String str) {
 
-        if(CheckString.isEmpty(str)) {
+        if(StringUtil.isEmpty(str)) {
             return "";
         }
 
