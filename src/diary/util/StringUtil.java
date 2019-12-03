@@ -1,6 +1,6 @@
 package diary.util;
 
-public class CheckString {
+public class StringUtil {
     public static boolean isEmpty(String str) {
         if(str == null) {
             return true;
@@ -17,5 +17,14 @@ public class CheckString {
         }
 
         return false;
+    }
+
+    public static String nullToEmpty(String str) {
+
+        if(str == null) {
+            return "";
+        }
+
+        return str;
     }
 }

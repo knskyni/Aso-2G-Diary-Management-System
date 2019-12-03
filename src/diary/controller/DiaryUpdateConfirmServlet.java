@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import diary.beans.DiaryInfoBeans;
 import diary.beans.UserInfoBeans;
-import diary.util.CheckString;
+import diary.util.StringUtil;
 
 @WebServlet("/diary/update/confirm")
 public class DiaryUpdateConfirmServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class DiaryUpdateConfirmServlet extends HttpServlet {
         String aboutComment = request.getParameter("about_comment");
 
         // When not entered
-        if(CheckString.isEmpty(goodComment) || CheckString.isEmpty(badComment) || CheckString.isEmpty(aboutComment)) {
+        if(StringUtil.isEmpty(goodComment) || StringUtil.isEmpty(badComment) || StringUtil.isEmpty(aboutComment)) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
             return;
         }
