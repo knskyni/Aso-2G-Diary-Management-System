@@ -61,6 +61,7 @@
                             <th scope="col">登録日</th>
                             <th scope="col">最終更新日</th>
                             <th scope="col">担任チェック</th>
+                            <th scope="col">閲覧</th>
                             <th scope="col">操作</th>
                         </tr>
                     </thead>
@@ -73,6 +74,7 @@
                             <td><%= sdfTime.format(diaryInfo.getRegistTime()) %></td>
                             <td><%= diaryInfo.getUpdateTime() == null ? "" : sdfTime.format(diaryInfo.getUpdateTime()) %></td>
                             <td><%= diaryInfo.getTeacherComment() == null ? "未" : "済" %></td>
+                            <td><button type="button" class="btn btn-outline-success" onclick="location.href='./view?id=<%= diaryInfo.getDiaryId() %>'">表示する</button></td>
                             <td>
                             <% if(userInfo.getUserId().equals(diaryInfo.getUserId())) { %>
                                 <% if(diaryInfo.getTeacherComment() == null) {%>
