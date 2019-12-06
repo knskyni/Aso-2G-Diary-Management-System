@@ -65,6 +65,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <% if(diaryList != null) { %>
                         <% for(DiaryInfoBeans diaryInfo : diaryList) { %>
                         <tr>
                             <td><%= sdf.format(diaryInfo.getDate()) %></td>
@@ -86,6 +87,11 @@
                             </td>
                         </tr>
                         <% } %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6">日誌はまだ登録されていません。</td>
+                        </tr>
+                    <% } %>
                     </tbody>
                 </table>
                 <div class="alert alert-warning mt-5" role="alert">
