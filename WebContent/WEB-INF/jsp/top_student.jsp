@@ -32,7 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="./logout">ログアウト</a>
+                    <a class="nav-link" href="<%= request.getContextPath() + "/logout" %>">ログアウト</a>
                 </li>
             </ul>
             <span class="navbar-text">
