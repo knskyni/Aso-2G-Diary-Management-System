@@ -91,7 +91,7 @@
                         <% } %>
                     <% } else { %>
                         <tr>
-                            <td colspan="6">日誌はまだ登録されていません。</td>
+                            <td colspan="7">日誌はまだ登録されていません。</td>
                         </tr>
                     <% } %>
                     </tbody>
@@ -115,9 +115,12 @@
     <script type="text/javascript">
     $(document).ready(function(){
         $('#diary').DataTable({
-            "language": {
+            'language': {
                 "url": "http://cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Japanese.json"
             },
+            'columnDefs': [
+                {'targets': '_all', 'sWidth': 'auto'}
+            ]
         });
     });
     </script>

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="diary.beans.UserInfoBeans" %>
 <%@ page import="diary.beans.DiaryInfoBeans" %>
+<%@ page import="diary.util.HTML" %>
 <%
     UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
     DiaryInfoBeans diaryInfo = (DiaryInfoBeans)request.getAttribute("diaryInfo");
@@ -28,7 +29,7 @@
 <body class="w-100">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand font-weight-bold" href="ようこそ、<%= userInfo.getClassName() %> <%= userInfo.getLastName() %> <%= userInfo.getFirstName() %>さん！">
+        <a class="navbar-brand font-weight-bold" href="<%= request.getContextPath() + "/top" %>">
             <i class="far fa-sticky-note fa-lg"></i>
             クラス日誌管理システム
         </a>
@@ -59,23 +60,23 @@
                     <tbody>
                         <tr>
                             <th scope="row">学科</th>
-                            <td><%= diaryInfo.getClassName() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getClassName()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">名前</th>
-                            <td><%= diaryInfo.getUserName() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getUserName()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">よかったこと</th>
-                            <td><%= diaryInfo.getGoodComment() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getGoodComment()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">気になったこと</th>
-                            <td><%= diaryInfo.getBadComment() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getBadComment()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">ひとこと</th>
-                            <td><%= diaryInfo.getAboutComment() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getAboutComment()) %></td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,11 +86,11 @@
                     <tbody>
                         <tr>
                             <th scope="row">担任名</th>
-                            <td><%= diaryInfo.getTeacherName() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getTeacherName()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">担任コメント</th>
-                            <td><%= diaryInfo.getTeacherComment() %></td>
+                            <td><%= HTML.sanitize(diaryInfo.getTeacherComment()) %></td>
                         </tr>
                     </tbody>
                 </table>
