@@ -10,12 +10,12 @@ public class UserUtil {
         return last + " " + first;
     }
 
-    public static String getClassName(String courseName, int grade, String className) {
+    public static String getClassName(String courseName, Integer grade, String className) {
 
-        if(className == null) {
-            className = "";
+        if(grade == 0) {
+            grade = null;
         }
 
-        return courseName + grade + className;
+        return StringUtil.nullToEmpty(courseName) + (grade == null ? "" : grade) + StringUtil.nullToEmpty(className);
     }
 }
