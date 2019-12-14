@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import diary.beans.DiaryInfoBeans;
-import diary.util.StringUtil;
 import diary.util.UserUtil;
 
 public class DiaryDao extends Dao {
@@ -15,7 +14,7 @@ public class DiaryDao extends Dao {
     public final String getListSQL = "SELECT `diaries`.`id`, `diaries`.`student_id`, `students`.`last_name` AS `student_last_name`, `students`.`first_name` AS `student_first_name`, `courses`.`course_name`, `classes`.`grade`, `classes`.`class_name`, `diaries`.`date`, `diaries`.`regist_time`, `diaries`.`update_time`, `diaries`.`good_comment`, `diaries`.`bad_comment`, `diaries`.`about_comment`, `teachers`.`last_name` AS `teacher_last_name`, `teachers`.`first_name` AS `teacher_first_name`, `diaries`.`teacher_comment` FROM `diaries` INNER JOIN `students` ON `diaries`.`student_id` = `students`.`student_id` INNER JOIN `classes` ON `diaries`.`class_code` = `classes`.`class_code` INNER JOIN `courses` ON `classes`.`course_code` = `courses`.`course_code` LEFT OUTER JOIN `teachers` ON `diaries`.`teacher_id` = `teachers`.`teacher_id` WHERE `diaries`.`class_code` = ? AND `status` = 'public';";
     public final String insertCheckSQL = "SELECT COUNT(*) AS `count` FROM `diaries` WHERE `class_code` = ? AND `date` = ? AND `status` = 'public';";
     public final String insertSQL = "INSERT INTO `diaries`(`class_code`, `date`, `student_id`, `regist_time`, `update_time`, `good_comment`, `bad_comment`, `about_comment`) VALUES (?, ?, ?, ?, NULL, ?, ?, ?);";
-    public final String getDiarySQL = "SELECT `diaries`.`student_id`, `students`.`last_name` AS `student_last_name`, `students`.`first_name` AS `student_first_name`, `courses`.`course_name`, `classes`.`grade`, `classes`.`class_name`, `diaries`.`date`, `diaries`.`good_comment`, `diaries`.`bad_comment`, `diaries`.`about_comment`, `teachers`.`last_name` AS `teacher_last_name`, `teachers`.`first_name` AS `teacher_first_name`, `diaries`.`teacher_comment` FROM `diaries` INNER JOIN `students` ON `diaries`.`student_id` = `students`.`student_id` INNER JOIN `classes` ON `students`.`class_code` = `classes`.`class_code` INNER JOIN `courses` ON `classes`.`course_code` = `courses`.`course_code` LEFT OUTER JOIN `teachers` ON `diaries`.`teacher_id` = `teachers`.`teacher_id` WHERE `diaries`.`id` = ? AND `diaries`.`status` = 'public';";
+    public final String getDiarySQL = "SELECT `diaries`.`id`, `diaries`.`student_id`, `students`.`last_name` AS `student_last_name`, `students`.`first_name` AS `student_first_name`, `courses`.`course_name`, `classes`.`grade`, `classes`.`class_name`, `diaries`.`date`, `diaries`.`good_comment`, `diaries`.`bad_comment`, `diaries`.`about_comment`, `teachers`.`last_name` AS `teacher_last_name`, `teachers`.`first_name` AS `teacher_first_name`, `diaries`.`teacher_comment` FROM `diaries` INNER JOIN `students` ON `diaries`.`student_id` = `students`.`student_id` INNER JOIN `classes` ON `students`.`class_code` = `classes`.`class_code` INNER JOIN `courses` ON `classes`.`course_code` = `courses`.`course_code` LEFT OUTER JOIN `teachers` ON `diaries`.`teacher_id` = `teachers`.`teacher_id` WHERE `diaries`.`id` = ? AND `diaries`.`status` = 'public';";
     public final String updateSQL = "UPDATE `diaries` SET `date` = ?, `update_time` = ?, `good_comment` = ?, `bad_comment` = ?, `about_comment` = ? WHERE `id` = ? AND `student_id` = ?;";
     public final String deleteSQL = "UPDATE `diaries` SET `status` = 'deleted' WHERE `id` = ? AND `student_id` = ?;";
 
@@ -203,6 +202,7 @@ public class DiaryDao extends Dao {
 
             while(rs.next()) {
                 diaryInfo = new DiaryInfoBeans();
+                diaryInfo.setDiaryId(rs.getInt("id"));
                 diaryInfo.setUserId(rs.getString("student_id"));
                 diaryInfo.setUserName(UserUtil.getUserName(rs.getString("student_last_name"), rs.getString("student_first_name")));
                 diaryInfo.setClassName(UserUtil.getClassName(rs.getString("course_name"), rs.getInt("grade"), rs.getString("class_name")));
@@ -211,7 +211,7 @@ public class DiaryDao extends Dao {
                 diaryInfo.setBadComment(rs.getString("bad_comment"));
                 diaryInfo.setAboutComment(rs.getString("about_comment"));
                 diaryInfo.setTeacherName(UserUtil.getUserName(rs.getString("teacher_last_name"), rs.getString("teacher_first_name")));
-                diaryInfo.setTeacherComment(StringUtil.nullToEmpty(rs.getString("teacher_comment")));
+                diaryInfo.setTeacherComment(rs.getString("teacher_comment"));
             }
         } catch(SQLException e) {
             e.printStackTrace();

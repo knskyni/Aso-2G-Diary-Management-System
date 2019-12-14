@@ -94,6 +94,14 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="form-group text-center">
+                    <button class="btn btn-secondary mb-2 px-5" type="button" onclick="history.back()">戻る</button>
+                <% if(userInfo.getUserId().equals(diaryInfo.getUserId())) { %>
+                    <% if(diaryInfo.getTeacherComment() == null) { %>
+                    <button class="btn btn-primary mb-2 ml-2 px-5" type="button" onclick="location.href='./update/input?id=<%= diaryInfo.getDiaryId() %>'">編集する</button>
+                    <% } %>
+                <% } %>
+                </div>
             </div>
         </div>
     </div>
