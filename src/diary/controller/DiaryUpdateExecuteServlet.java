@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import diary.beans.DiaryInfoBeans;
+import diary.beans.UserInfoBeans;
 import diary.model.DiaryModel;
+import diary.util.UserUtil;
 
 @WebServlet("/diary/update/execute")
 public class DiaryUpdateExecuteServlet extends HttpServlet {
@@ -18,6 +20,7 @@ public class DiaryUpdateExecuteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Session
         HttpSession session = request.getSession(false);
+        UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
         DiaryInfoBeans updateDiaryInfo = (DiaryInfoBeans)session.getAttribute("updateDiaryInfo");
         if(updateDiaryInfo == null) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
@@ -26,11 +29,16 @@ public class DiaryUpdateExecuteServlet extends HttpServlet {
 
         // Execute
         DiaryModel diaryModel = new DiaryModel();
-        boolean result = diaryModel.update(updateDiaryInfo);
-
-        if(!result) {
-            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
-            return;
+        if(UserUtil.isTeacher(userInfo)) {
+            if(!diaryModel.teacherUpdate(updateDiaryInfo)) {
+                response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                return;
+            }
+        } else {
+            if(!diaryModel.update(updateDiaryInfo)) {
+                response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                return;
+            }
         }
 
         response.sendRedirect("complete");

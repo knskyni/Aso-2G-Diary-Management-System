@@ -110,4 +110,38 @@ public class DiaryModel {
 
         return result;
     }
+
+    public boolean teacherUpdate(DiaryInfoBeans diaryInfo) {
+        DiaryDao diaryDao = new DiaryDao();
+        boolean result = false;
+
+        try {
+            diaryDao.connect();
+            result = diaryDao.teacherUpdate(diaryInfo);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            diaryDao.close();
+        }
+
+        return result;
+    }
+
+    public boolean teacherDelete(DiaryInfoBeans diaryInfo) {
+        DiaryDao diaryDao = new DiaryDao();
+        boolean result = false;
+
+        try {
+            diaryDao.connect();
+            result = diaryDao.teacherDelete(diaryInfo);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            diaryDao.close();
+        }
+
+        return result;
+    }
 }

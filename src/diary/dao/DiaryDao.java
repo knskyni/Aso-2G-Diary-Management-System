@@ -17,6 +17,8 @@ public class DiaryDao extends Dao {
     public final String getDiarySQL = "SELECT `diaries`.`id`, `diaries`.`student_id`, `students`.`last_name` AS `student_last_name`, `students`.`first_name` AS `student_first_name`, `courses`.`course_name`, `classes`.`grade`, `classes`.`class_name`, `diaries`.`date`, `diaries`.`good_comment`, `diaries`.`bad_comment`, `diaries`.`about_comment`, `teachers`.`last_name` AS `teacher_last_name`, `teachers`.`first_name` AS `teacher_first_name`, `diaries`.`teacher_comment` FROM `diaries` INNER JOIN `students` ON `diaries`.`student_id` = `students`.`student_id` INNER JOIN `classes` ON `students`.`class_code` = `classes`.`class_code` INNER JOIN `courses` ON `classes`.`course_code` = `courses`.`course_code` LEFT OUTER JOIN `teachers` ON `diaries`.`teacher_id` = `teachers`.`teacher_id` WHERE `diaries`.`id` = ? AND `diaries`.`status` = 'public';";
     public final String updateSQL = "UPDATE `diaries` SET `date` = ?, `update_time` = ?, `good_comment` = ?, `bad_comment` = ?, `about_comment` = ? WHERE `id` = ? AND `student_id` = ?;";
     public final String deleteSQL = "UPDATE `diaries` SET `status` = 'deleted' WHERE `id` = ? AND `student_id` = ?;";
+    public final String teacherUpdateSQL = "UPDATE `diaries` SET `teacher_id` = ?, `teacher_comment` = ? WHERE `id` = ?;";
+    public final String teacherDeleteSQL = "UPDATE `diaries` SET `teacher_id` = NULL, `teacher_comment` = NULL WHERE `id` = ?;";
 
     public List<DiaryInfoBeans> getList() {
         // If not connected to DB, return null
@@ -276,6 +278,68 @@ public class DiaryDao extends Dao {
             // Parameter Prepare
             stmt.setInt(1, diaryInfo.getDiaryId());
             stmt.setString(2, diaryInfo.getUserId());
+
+            // Execute
+            executeNum = stmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return (executeNum == 1) ? true : false;
+    }
+
+    public boolean teacherUpdate(DiaryInfoBeans diaryInfo) {
+        // If not connected to DB, return null
+        if(con == null) {
+            System.out.println("データベースに接続していません。");
+            return false;
+        }
+
+        // Prepare
+        int executeNum = 0;
+
+        // SQL Execute
+        PreparedStatement stmt = null;
+
+        try {
+            // SQL Prepare
+            stmt = con.prepareStatement(teacherUpdateSQL);
+
+            // Parameter Prepare
+            stmt.setString(1, diaryInfo.getTeacherId());
+            stmt.setString(2, diaryInfo.getTeacherComment());
+            stmt.setInt(3, diaryInfo.getDiaryId());
+
+            // Execute
+            executeNum = stmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return (executeNum == 1) ? true : false;
+    }
+
+    public boolean teacherDelete(DiaryInfoBeans diaryInfo) {
+        // If not connected to DB, return null
+        if(con == null) {
+            System.out.println("データベースに接続していません。");
+            return false;
+        }
+
+        // Prepare
+        int executeNum = 0;
+
+        // SQL Execute
+        PreparedStatement stmt = null;
+
+        try {
+            // SQL Prepare
+            stmt = con.prepareStatement(teacherDeleteSQL);
+
+            // Parameter Prepare
+            stmt.setInt(1, diaryInfo.getDiaryId());
 
             // Execute
             executeNum = stmt.executeUpdate();

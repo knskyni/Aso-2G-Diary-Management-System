@@ -44,10 +44,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                    <button type="button" class="btn btn-outline-primary w-100 py-5" onclick="location.href='./teacher/diary/list'">一覧</button>
+                    <button type="button" class="btn btn-outline-primary w-100 py-5" onclick="location.href='./diary/list'">一覧</button>
             </div>
             <div class="col-md-6">
-                <button type="button" class="btn btn-outline-secondary w-100 py-5" onclick="location.href='./teacher/diary/new/input'">新規登録</button>
+                <button type="button" class="btn btn-outline-secondary w-100 py-5" onclick="location.href='./diary/new/input'">新規登録</button>
             </div>
         </div>
     </div>

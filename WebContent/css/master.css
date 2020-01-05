@@ -80,3 +80,8 @@ table#diary th {
 table#diary > tbody > tr > td {
 	text-align: center;
 }
+
+table .noswap {
+    word-break: break-word !important;
+    white-space: normal !important;
+}

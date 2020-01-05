@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import diary.beans.DiaryInfoBeans;
+import diary.beans.UserInfoBeans;
 import diary.model.DiaryModel;
+import diary.util.UserUtil;
 
 @WebServlet("/diary/delete/execute")
 public class DiaryDeleteExecuteServlet extends HttpServlet {
@@ -18,6 +20,7 @@ public class DiaryDeleteExecuteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Session
         HttpSession session = request.getSession(false);
+        UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
         DiaryInfoBeans deleteDiaryInfo = (DiaryInfoBeans)session.getAttribute("deleteDiaryInfo");
         if(deleteDiaryInfo == null) {
             response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
@@ -26,11 +29,17 @@ public class DiaryDeleteExecuteServlet extends HttpServlet {
 
         // Execute
         DiaryModel diaryModel = new DiaryModel();
-        boolean result = diaryModel.delete(deleteDiaryInfo);
 
-        if(!result) {
-            response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
-            return;
+        if(UserUtil.isTeacher(userInfo)) {
+            if(!diaryModel.teacherDelete(deleteDiaryInfo)) {
+                response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                return;
+            }
+        } else {
+            if(!diaryModel.delete(deleteDiaryInfo)) {
+                response.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
+                return;
+            }
         }
 
         response.sendRedirect("complete");

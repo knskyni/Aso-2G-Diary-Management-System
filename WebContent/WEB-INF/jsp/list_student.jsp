@@ -69,13 +69,13 @@
                     <% if(diaryList != null) { %>
                         <% for(DiaryInfoBeans diaryInfo : diaryList) { %>
                         <tr>
-                            <td><%= sdf.format(diaryInfo.getDate()) %></td>
-                            <td><%= diaryInfo.getUserName() %></td>
-                            <td><%= sdfTime.format(diaryInfo.getRegistTime()) %></td>
-                            <td><%= diaryInfo.getUpdateTime() == null ? "" : sdfTime.format(diaryInfo.getUpdateTime()) %></td>
-                            <td><%= diaryInfo.getTeacherComment() == null ? "未" : "済" %></td>
-                            <td><button type="button" class="btn btn-outline-success" onclick="location.href='./view?id=<%= diaryInfo.getDiaryId() %>'">表示する</button></td>
-                            <td>
+                            <td class="noswap"><%= sdf.format(diaryInfo.getDate()) %></td>
+                            <td class="noswap"><%= diaryInfo.getUserName() %></td>
+                            <td class="noswap"><%= sdfTime.format(diaryInfo.getRegistTime()) %></td>
+                            <td class="noswap"><%= diaryInfo.getUpdateTime() == null ? "" : sdfTime.format(diaryInfo.getUpdateTime()) %></td>
+                            <td class="noswap"><%= diaryInfo.getTeacherComment() == null ? "未" : "済" %></td>
+                            <td class="noswap"><button type="button" class="btn btn-outline-success" onclick="location.href='./view?id=<%= diaryInfo.getDiaryId() %>'">表示する</button></td>
+                            <td class="noswap">
                             <% if(userInfo.getUserId().equals(diaryInfo.getUserId())) { %>
                                 <% if(diaryInfo.getTeacherComment() == null) {%>
                                 <button type="button" class="btn btn-outline-info" onclick="location.href='./update/input?id=<%= diaryInfo.getDiaryId() %>'">編集</button>
@@ -98,8 +98,10 @@
                 </table>
                 <div class="alert alert-warning mt-5" role="alert">
                     <h4 class="alert-heading">注意</h4>
-                    <li>担任チェックが「済」になっている日誌の編集・削除はできません。</li>
-                    <li>他人の日誌は編集・削除できません。</li>
+                    <ul>
+                        <li>担任チェックが「済」になっている日誌の編集・削除はできません。</li>
+                        <li>他人の日誌は編集・削除できません。</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -118,9 +120,7 @@
             'language': {
                 "url": "http://cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Japanese.json"
             },
-            'columnDefs': [
-                {'targets': '_all', 'sWidth': 'auto'}
-            ]
+            'autoWidth': false
         });
     });
     </script>

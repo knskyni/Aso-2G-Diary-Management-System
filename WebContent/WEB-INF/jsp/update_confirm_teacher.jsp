@@ -6,7 +6,7 @@
 <%@ page import="diary.util.HTML" %>
 <%
     UserInfoBeans userInfo = (UserInfoBeans)session.getAttribute("userInfo");
-    DiaryInfoBeans registDiaryInfo = (DiaryInfoBeans)session.getAttribute("registDiaryInfo");
+    DiaryInfoBeans updateDiaryInfo = (DiaryInfoBeans)session.getAttribute("updateDiaryInfo");
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <!DOCTYPE html>
@@ -47,7 +47,7 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                ようこそ、<%= userInfo.getClassName() %> <%= userInfo.getLastName() %> <%= userInfo.getFirstName() %>さん！
+                ようこそ、<%= userInfo.getLastName() %> <%= userInfo.getFirstName() %>先生
             </span>
         </div>
     </nav>
@@ -55,31 +55,47 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h2>日誌登録 :: 確認画面</h2>
+                <h2>担任コメント修正 :: 確認画面</h2>
                 <p>こちらで登録してよろしいですか？</p>
+                <h5 class="mt-5">学生記入欄</h5>
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                            <th scope="row">日付</th>
-                            <td><%= sdf.format(registDiaryInfo.getDate()) %></td>
+                            <th scope="row">学科</th>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getClassName()) %></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">名前</th>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getUserName()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">よかったこと</th>
-                            <td><%= HTML.sanitize(registDiaryInfo.getGoodComment()) %></td>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getGoodComment()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">気になったこと</th>
-                            <td><%= HTML.sanitize(registDiaryInfo.getBadComment()) %></td>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getBadComment()) %></td>
                         </tr>
                         <tr>
                             <th scope="row">ひとこと</th>
-                            <td><%= HTML.sanitize(registDiaryInfo.getAboutComment()) %></td>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getAboutComment()) %></td>
                         </tr>
                     </tbody>
                 </table>
+
+                <h5 class="mt-5">担任記入欄</h5>
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th scope="row">担任コメント</th>
+                            <td><%= HTML.sanitize(updateDiaryInfo.getTeacherComment()) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="form-group text-center">
                     <button class="btn btn-secondary mb-2 px-5" type="button" onclick="history.back()">戻る</button>
-                    <button class="btn btn-primary mb-2 ml-2 px-5" type="button" onclick="location.href='execute'">登録する</button>
+                    <button class="btn btn-primary mb-2 ml-2 px-5" type="button" onclick="location.href='execute'">更新する</button>
                 </div>
             </div>
         </div>

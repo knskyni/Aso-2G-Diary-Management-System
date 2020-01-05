@@ -79,7 +79,7 @@
                 </table>
                 <div class="form-group text-center">
                     <button class="btn btn-secondary mb-2 px-5" type="button" onclick="history.back()">戻る</button>
-                    <button class="btn btn-primary mb-2 ml-2 px-5" type="button" onclick="location.href='execute'">送信</button>
+                    <button class="btn btn-primary mb-2 ml-2 px-5" type="button" onclick="location.href='execute'">削除する</button>
                 </div>
             </div>
         </div>

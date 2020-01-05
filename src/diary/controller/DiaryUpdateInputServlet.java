@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import diary.beans.DiaryInfoBeans;
 import diary.beans.UserInfoBeans;
 import diary.model.DiaryModel;
+import diary.util.UserUtil;
 
 @WebServlet("/diary/update/input")
 public class DiaryUpdateInputServlet extends HttpServlet {
@@ -39,7 +40,7 @@ public class DiaryUpdateInputServlet extends HttpServlet {
         if(updateDiaryInfo == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
-        } else if(!updateDiaryInfo.getUserId().equals(userInfo.getUserId())) {
+        } else if(UserUtil.isStudent(userInfo) && !updateDiaryInfo.getUserId().equals(userInfo.getUserId())) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
@@ -48,8 +49,16 @@ public class DiaryUpdateInputServlet extends HttpServlet {
         updateDiaryInfo.setDiaryId(diaryId);
         session.setAttribute("updateDiaryInfo", updateDiaryInfo);
 
+        // 生徒・教員分岐
+        String jsp;
+        if(UserUtil.isTeacher(userInfo)) {
+            jsp = "../../WEB-INF/jsp/update_input_teacher.jsp";
+        } else {
+            jsp = "../../WEB-INF/jsp/update_input_student.jsp";
+        }
+
         // JSP
-        RequestDispatcher rd = request.getRequestDispatcher("../../WEB-INF/jsp/update_input_student.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher(jsp);
         rd.forward(request, response);
     }
 }
