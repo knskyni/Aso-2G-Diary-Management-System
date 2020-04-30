@@ -1,1 +1,1 @@
-# Aso-2G-Diary-Management-System
+# aso-diary-web
